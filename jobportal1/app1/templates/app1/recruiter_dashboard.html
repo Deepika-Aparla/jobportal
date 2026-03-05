@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recruiter Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+            padding: 14px;
+            text-align: center;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        select {
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 6px 10px;
+            border: none;
+            background-color: #27ae60;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #219150;
+        }
+
+        /* Status Colors */
+        .submitted {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .approved {
+            color: green;
+            font-weight: bold;
+        }
+
+        .rejected {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Recruiter Dashboard</h1>
+
+<table>
+    <tr>
+        <th>Candidate</th>
+        <th>Job</th>
+        <th>Resume</th>
+        <th>Status</th>
+        <th>Update Status</th>
+    </tr>
+
+    {% for app in applications %}
+    <tr>
+        <td>{{ app.user.username }}</td>
+        <td>{{ app.job.title }}</td>
+
+        <td>
+            {% if app.resume %}
+                <a href="{{ app.resume.url }}" target="_blank">View Resume</a>
+            {% else %}
+                No file
+            {% endif %}
+        </td>
+
+        <td class="{{ app.status }}">
+            {{ app.get_status_display }}
+        </td>
+
+        <td>
+            <form method="POST" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="application_id" value="{{ app.pk }}">
+
+                <select name="status">
+                    {% for key, label in app.STATUS_CHOICES %}
+                        <option value="{{ key }}" {% if app.status == key %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit">Update</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

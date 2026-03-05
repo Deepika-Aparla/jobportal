@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #36d1dc, #5b86e5);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-container {
+            background: white;
+            width: 380px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form p {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #36d1dc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2ca7b0;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .login-link a {
+            text-decoration: none;
+            color: #5b86e5;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-container">
+    <h2>Create Account</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+
+    <div class="login-link">
+        Already have an account?
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+</div>
+
+</body>
+</html>
