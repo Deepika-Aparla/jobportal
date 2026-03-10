@@ -31,10 +31,12 @@ SECRET_KEY = 'django-insecure-5o7j%^llm=7khezcr7s288(3^_=t-i1*92l)=1ynhsf2i)$@lu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['jobportal-7e3e.onrender.com']
+ALLOWED_HOSTS = ['jobportal-7e3e.onrender.com',"localhost",
+    "127.0.0.1"]
 
+CSRF_TRUSTED_ORIGINS =["https://jobportal-7e3e.onrender.com"]
 
-# Application definition
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
